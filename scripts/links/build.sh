@@ -13,7 +13,8 @@ for BINARY in ${BINARIES}; do
 done
 
 # sym link BINARY
-REAL_PATH_CMAKE=$(which cmake 2>/dev/null || echo /usr/local/bin/cmake)
+REAL_PATH_CMAKE=/usr/local/bin/cmake
+[ -x "$REAL_PATH_CMAKE" ] || REAL_PATH_CMAKE=$(which cmake 2>/dev/null || echo cmake)
 for BINARY in ${BINARIES}; do
     if [ ! -f ${OUTPUT_DIR}/bin/$BINARY ]; then
         REAL_PATH=$(which $BINARY)

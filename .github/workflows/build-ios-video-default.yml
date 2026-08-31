@@ -17,7 +17,10 @@ jobs:
           curl -L https://github.com/Kitware/CMake/releases/download/v3.31.7/cmake-3.31.7-macos-universal.tar.gz -o /tmp/cmake.tar.gz
           sudo tar -xzf /tmp/cmake.tar.gz -C /opt/
           sudo ln -sf /opt/cmake-3.31.7-macos-universal/CMake.app/Contents/bin/cmake /usr/local/bin/cmake
-          sudo ln -sf /opt/cmake-3.31.7-macos-universal/CMake.app/Contents/share /usr/local/share/cmake-3.31
+          sudo ln -sf /opt/cmake-3.31.7-macos-universal/CMake.app/Contents/share/cmake /usr/local/share/cmake
+          # Remove brew cmake so cmake 3.x is used
+          brew uninstall --ignore-dependencies cmake 2>/dev/null || true
+          cmake --version
 
       - name: Print tool versions
         run: gmake tool-versions || true
