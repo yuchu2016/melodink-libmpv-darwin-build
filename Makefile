@@ -45,7 +45,7 @@ OUTPUT_DIR = ${BUILD_DIR}/output
 DOWNLOADS_DIR = ${INTERMEDIATE_DIR}/downloads
 LINKS_DIR = ${INTERMEDIATE_DIR}/links
 PKGCONFIG_DIR = ${INTERMEDIATE_DIR}/pkg-config_${HOST_OS}-${HOST_ARCH}
-SANDBOX_PATH = ${PROJECT_DIR}/${LINKS_DIR}/bin:${PROJECT_DIR}/${PKGCONFIG_DIR}/bin:/bin:/usr/bin
+SANDBOX_PATH = ${PROJECT_DIR}/${LINKS_DIR}/bin:${PROJECT_DIR}/${PKGCONFIG_DIR}/bin:/opt/homebrew/bin:/bin:/usr/bin
 
 # chars
 NULL =

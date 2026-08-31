@@ -31,6 +31,7 @@ jobs:
 
       - name: Build iOS arm64 video-default
         run: |
+          export PATH="/opt/homebrew/bin:$PATH"
           VERSION=${{ steps.version.outputs.version }}
           gmake build/output/libmpv-libs_${VERSION}_ios-arm64-video-default.tar.gz
 
