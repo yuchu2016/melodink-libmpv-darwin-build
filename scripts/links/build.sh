@@ -18,3 +18,10 @@ for BINARY in ${BINARIES}; do
         cp $(which $BINARY) ${OUTPUT_DIR}/bin/$BINARY ||
         true
 done
+
+# cmake needs its modules directory (CMAKE_ROOT)
+# when binary is copied, it looks relative to the binary location
+if [ -d /opt/homebrew/share/cmake ]; then
+    mkdir -p ${OUTPUT_DIR}/share
+    ln -sf /opt/homebrew/share/cmake ${OUTPUT_DIR}/share/cmake
+fi

@@ -5,11 +5,6 @@ set -u # treat unset variables as an error
 
 cd ${SRC_DIR}
 
-# cmake needs CMAKE_ROOT when running under env -i (cleared env)
-if [ -z "${CMAKE_ROOT:-}" ] && [ -d /opt/homebrew/share/cmake ]; then
-    export CMAKE_ROOT=/opt/homebrew/share/cmake
-fi
-
 # cross build with meson
 cp ${PROJECT_DIR}/scripts/mbedtls/meson.build ./meson.build
 meson setup build_cross \
