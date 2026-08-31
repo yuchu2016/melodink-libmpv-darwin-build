@@ -13,8 +13,9 @@ jobs:
       - name: Install requirements
         run: |
           brew install go meson ninja nasm cmake make
-          # Copy cmake binary to /usr/bin so env -i can find it
-          sudo cp $(which cmake) /usr/bin/cmake
+          # cmake is at /opt/homebrew/bin which env -i strips from PATH
+          # Add it to the Makefile's SANDBOX_PATH
+          sed -i '' 's|/bin:/usr/bin|/opt/homebrew/bin:/bin:/usr/bin|' Makefile
 
       - name: Print tool versions
         run: gmake tool-versions || true
