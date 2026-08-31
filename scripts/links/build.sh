@@ -14,13 +14,23 @@ done
 
 # sym link BINARY
 for BINARY in ${BINARIES}; do
-    [ ! -h ${OUTPUT_DIR}/bin/$BINARY ] &&
-        cp $(which $BINARY) ${OUTPUT_DIR}/bin/$BINARY ||
-        true
+    if [ ! -f ${OUTPUT_DIR}/bin/$BINARY ]; then
+        REAL_PATH=$(which $BINARY)
+        if [ "$BINARY" = "cmake" ]; then
+            # Create cmake wrapper for cmake 4.x compatibility
+            cat > ${OUTPUT_DIR}/bin/$BINARY << CMEOF
+#!/bin/sh
+export CMAKE_POLICY_VERSION_MINIMUM=3.5
+exec $REAL_PATH "\\$@"
+CMEOF
+            chmod +x ${OUTPUT_DIR}/bin/$BINARY
+        else
+            cp $REAL_PATH ${OUTPUT_DIR}/bin/$BINARY
+        fi
+    fi
 done
 
 # cmake needs its modules directory (CMAKE_ROOT)
-# when binary is copied, it looks relative to the binary location
 if [ -d /opt/homebrew/share/cmake ]; then
     mkdir -p ${OUTPUT_DIR}/share
     ln -sf /opt/homebrew/share/cmake ${OUTPUT_DIR}/share/cmake
