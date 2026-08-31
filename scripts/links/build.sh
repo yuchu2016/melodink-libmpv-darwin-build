@@ -13,16 +13,12 @@ for BINARY in ${BINARIES}; do
 done
 
 # sym link BINARY
+REAL_PATH_CMAKE=$(which cmake 2>/dev/null || echo /opt/homebrew/bin/cmake)
 for BINARY in ${BINARIES}; do
     if [ ! -f ${OUTPUT_DIR}/bin/$BINARY ]; then
         REAL_PATH=$(which $BINARY)
         if [ "$BINARY" = "cmake" ]; then
-            # Create cmake wrapper for cmake 4.x compatibility
-            cat > ${OUTPUT_DIR}/bin/$BINARY << CMEOF
-#!/bin/sh
-export CMAKE_POLICY_VERSION_MINIMUM=3.5
-exec $REAL_PATH "\\$@"
-CMEOF
+            printf '#!/bin/sh\nexport CMAKE_POLICY_VERSION_MINIMUM=3.5\nexec %s "$@"\n' "$REAL_PATH_CMAKE" > ${OUTPUT_DIR}/bin/$BINARY
             chmod +x ${OUTPUT_DIR}/bin/$BINARY
         else
             cp $REAL_PATH ${OUTPUT_DIR}/bin/$BINARY
