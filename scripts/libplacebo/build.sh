@@ -5,6 +5,9 @@ set -u # treat unset variables as an error
 
 cd ${SRC_DIR}
 
+# Fix Python 3.14 ElementTree compatibility
+sed -i '' 's/registry = VkXML(ET.parse(xmlfile))/registry = VkXML(ET.parse(xmlfile).getroot())/' src/vulkan/utils_gen.py 2>/dev/null || true
+
 rm -rf ./3rdparty
 mkdir -p ./3rdparty 
 
