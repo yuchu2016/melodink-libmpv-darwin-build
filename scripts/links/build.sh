@@ -15,6 +15,6 @@ done
 # sym link BINARY
 for BINARY in ${BINARIES}; do
     [ ! -h ${OUTPUT_DIR}/bin/$BINARY ] &&
-        ln -s $(which $BINARY) ${OUTPUT_DIR}/bin/$BINARY ||
+        cp $(which $BINARY) ${OUTPUT_DIR}/bin/$BINARY ||
         true
 done

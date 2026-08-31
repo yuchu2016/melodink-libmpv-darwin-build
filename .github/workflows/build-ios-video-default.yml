@@ -11,11 +11,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install requirements
-        run: |
-          brew install go meson ninja nasm cmake make
-          # cmake is at /opt/homebrew/bin which env -i strips from PATH
-          # Add it to the Makefile's SANDBOX_PATH
-          sed -i '' 's|/bin:/usr/bin|/opt/homebrew/bin:/bin:/usr/bin|' Makefile
+        run: brew install go meson ninja nasm cmake make
 
       - name: Print tool versions
         run: gmake tool-versions || true
