@@ -13,7 +13,7 @@ for BINARY in ${BINARIES}; do
 done
 
 # sym link BINARY
-REAL_PATH_CMAKE=$(which cmake 2>/dev/null || echo /opt/homebrew/bin/cmake)
+REAL_PATH_CMAKE=$(which cmake 2>/dev/null || echo /usr/local/bin/cmake)
 for BINARY in ${BINARIES}; do
     if [ ! -f ${OUTPUT_DIR}/bin/$BINARY ]; then
         REAL_PATH=$(which $BINARY)
@@ -27,7 +27,10 @@ for BINARY in ${BINARIES}; do
 done
 
 # cmake needs its modules directory (CMAKE_ROOT)
-if [ -d /opt/homebrew/share/cmake ]; then
+if [ -d /usr/local/share/cmake-3.31 ]; then
+    mkdir -p ${OUTPUT_DIR}/share
+    ln -sf /usr/local/share/cmake-3.31 ${OUTPUT_DIR}/share/cmake
+elif [ -d /opt/homebrew/share/cmake ]; then
     mkdir -p ${OUTPUT_DIR}/share
     ln -sf /opt/homebrew/share/cmake ${OUTPUT_DIR}/share/cmake
 fi
