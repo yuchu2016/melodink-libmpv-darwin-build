@@ -13,8 +13,8 @@ jobs:
       - name: Install requirements
         run: |
           brew install go meson ninja nasm cmake make
-          # Ensure cmake is accessible in standard PATH
-          sudo ln -sf $(which cmake) /usr/local/bin/cmake 2>/dev/null || true
+          # Copy cmake binary to /usr/bin so env -i can find it
+          sudo cp $(which cmake) /usr/bin/cmake
 
       - name: Print tool versions
         run: gmake tool-versions || true
